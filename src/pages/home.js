@@ -42,7 +42,7 @@ function Home(props) {
                     }
                 })
                 const filesFilteredArr = filters.getSpesificTagsFile(apiResponseFilteredArr)
-                setDataConfig({ data: filesFilteredArr, message: filesFilteredArr.length > 0 ? 'Data found' : 'No data found' })
+                setDataConfig({ data: filesFilteredArr, message: filesFilteredArr.length == 0 ? 'No data found' : '' })
             }
             setLoader(false)
         } else {
@@ -70,11 +70,12 @@ function Home(props) {
                 <Search handleClick={handleClick} onChange={onChange} queryText={userName} />
                 {loader && <Loader />}
             </div>
+            {console.log(dataConfig)}
             {!loader && dataConfig.message !== '' ?
                 <div div className={`m-2 p-2 border ${dataConfig.data.length > 0 ? 'border-green-800 bg-green-50' : 'border-red-800 bg-red-50'}`}>
                     <p>{dataConfig.message}!!!</p>
                 </div>
-                : !loader && dataConfig.message === '' && state.error ?
+                : !loader && dataConfig.message === '' && state.error && state.error.input ?
                     <div div className={`m-2 p-2 border border-red-800 bg-red-50`}>
                         <p>{state.error.input}</p>
                     </div> : null}
